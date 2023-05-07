@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Пример страницы с полями ввода и кнопками</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<h2>Получить погоду для 5 случайных городов</h2>
+				<button id="weather-btn" class="btn btn-primary">Получить погоду</button>
+			</div>
+			<div class="col-md-6">
+				<h2>Получить значение поля и вывести его ниже</h2>
+				<div class="input-group mb-3">
+					<input id="input-field" type="text" class="form-control" placeholder="Введите значение">
+					<div class="input-group-append">
+						<button id="input-btn" class="btn btn-primary" type="button">Получить значение</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Результат:</h2>
+				<div id="result-block"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
+
+

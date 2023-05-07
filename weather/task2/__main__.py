@@ -39,7 +39,7 @@ class WeatherAppGUI(tk.Frame):
         self.random_button = ctk.CTkButton(self, text="Random", command=self.generate_random)
         self.enter_button = ctk.CTkButton(self, text="Enter", command=self.generate_results)
         self.display_box = ctk.CTkTextbox(self, width=800, height=400)
-        
+
         self.grid_columnconfigure(1, weight=1)
         self.city_label.grid(row=0, column=0, sticky="w")
         self.city_entry.grid(row=0, column=1, padx=10, pady=10)
@@ -71,7 +71,7 @@ class WeatherAppGUI(tk.Frame):
         
         self.display_box.tag_add("center", "1.0", "end")
         self.display_box.configure(font=("Courier", 12))
-        
+
 
     def generate_results(self):
         entered_city = self.city_entry.get()

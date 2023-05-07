@@ -1,0 +1,18 @@
+#result-block {
+	padding: 10px;
+	border: 1px solid #ccc;
+	margin-top: 20px;
+}
+
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+	z-index: 2;
+	margin-left: -1px;
+}
+
+.input-group-append {
+	display: flex;
+}
+
+.input-group-append .btn {
+	border-radius: 0;
+}   
