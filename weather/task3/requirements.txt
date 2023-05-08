@@ -1,2 +1,7 @@
 flask
 gunicorn
+pandas
+tabulate
+flask_cors
+requests
+tenacity

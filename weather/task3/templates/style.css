@@ -1,18 +1,106 @@
-#result-block {
+body {
+	background-color: #f7f7f7;
+  }
+
+  .container {
+	margin-top: 30px;
+  }
+
+  .card {
+	margin-bottom: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease-in-out;
+  width: calc((100% - 80px) / 5);
+	flex: 1 1 auto;
+  max-width: 200px;
+}
+
+  .card:hover {
+	transform: translateY(-10px);
+  }
+
+  .card-header {	
+	background-color: #2d9cdb;
+	color: #fff;
+	border-radius: 10px 10px 0 0;
+	font-weight: 800;
+	font-size: 20px;
+	font-stretch: ultra-expanded;
+  }
+
+  .card-body {
+	padding: 20px;
+  }
+
+  .card-text {
+	font-size: 18px;
+	margin-bottom: 10px;
+  }
+
+  .card-title {
+	font-size: 12px;
+	margin-bottom: 20px;
+	font-weight: 800;
+  }
+
+  .city-name {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+  }
+
+  .icon {
+	margin-bottom: 20px;
+  }
+
+  .temperature {
+	font-size: 52px;
+	font-weight: bold;
+  }
+
+  .unit {
+	font-size: 24px;
+	font-weight: bold;
+	vertical-align: top;
+	margin-left: -10px;
+  }
+
+  .description {
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: capitalize;
+	margin-bottom: 10px;
+  }
+
+  .humidity {
+	font-size: 18px;
+	margin-bottom: 5px;
+  }
+
+  .aggregated-table {
+	margin-top: 30px;
+	display: none;
+  }
+
+  .aggregated-table th {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
 	padding: 10px;
-	border: 1px solid #ccc;
-	margin-top: 20px;
-}
+	background-color: #2d9cdb;
+	color: #fff;
+  }
 
-.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
-	z-index: 2;
-	margin-left: -1px;
-}
+  .aggregated-table td {
+	text-align: center;
+	font-size: 36px;
+	font-weight: bold;
+	padding: 20px;
+  }
 
-.input-group-append {
-	display: flex;
+#forecast-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-
-.input-group-append .btn {
-	border-radius: 0;
-}   

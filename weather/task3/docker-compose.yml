@@ -4,8 +4,10 @@ services:
   app:
     build:
       context: .
-    ports:
+    expose:
       - '5000'
+    env_file:
+      - ./.env
   
   nginx:
     image: nginx:latest
@@ -13,6 +15,6 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./app/templates:/app/static
+      - ./templates:/app/static
     depends_on:
       - app
