@@ -31,10 +31,9 @@ except Exception as exc:
     )
     sys.exit(1)
 
-
+@csrf_exempt
 def index(request):
     return render(request, 'index.html')
-
 
 @csrf_exempt
 def random_forecast(request):
