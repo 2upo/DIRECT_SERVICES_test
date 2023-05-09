@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Weather</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<style>
+		body {
+		  background-color: #f7f7f7;
+		}
+	
+		.container {
+		  margin-top: 30px;
+		}
+	
+		.card {
+		  margin-bottom: 20px;
+		  border-radius: 10px;
+		  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		  transition: all 0.3s ease-in-out;
+		width: calc((100% - 80px) / 5);
+		  flex: 1 1 auto;
+		max-width: 200px;
+	  }
+	
+		.card:hover {
+		  transform: translateY(-10px);
+		}
+	
+		.card-header {
+		  background-color: #2d9cdb;
+		  color: #fff;
+		  border-radius: 10px 10px 0 0;
+		  font-weight: 800;
+		  font-size: 20px;
+		  font-stretch: ultra-expanded;
+		}
+	
+		.card-body {
+		  padding: 20px;
+		}
+	
+		.card-text {
+		  font-size: 18px;
+		  margin-bottom: 10px;
+		}
+	
+		.card-title {
+		  font-size: 12px;
+		  margin-bottom: 20px;
+		  font-weight: 800;
+		}
+	
+		.city-name {
+		  font-size: 20px;
+		  font-weight: bold;
+		  margin-bottom: 10px;
+		}
+	
+		.icon {
+		  margin-bottom: 20px;
+		}
+	
+		.temperature {
+		  font-size: 52px;
+		  font-weight: bold;
+		}
+	
+		.unit {
+		  font-size: 24px;
+		  font-weight: bold;
+		  vertical-align: top;
+		  margin-left: -10px;
+		}
+	
+		.description {
+		  font-size: 12px;
+		  font-weight: bold;
+		  text-transform: capitalize;
+		  margin-bottom: 10px;
+		}
+	
+		.humidity {
+		  font-size: 18px;
+		  margin-bottom: 5px;
+		}
+	
+		.aggregated-table {
+		  margin-top: 30px;
+		  display: none;
+		}
+	
+		.aggregated-table th {
+		  text-align: center;
+		  font-size: 24px;
+		  font-weight: bold;
+		  padding: 10px;
+		  background-color: #2d9cdb;
+		  color: #fff;
+		}
+	
+		.aggregated-table td {
+		  text-align: center;
+		  font-size: 36px;
+		  font-weight: bold;
+		  padding: 20px;
+		}
+	  
+	  #forecast-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	  }
+	  </style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+						<h2>Get 5 random forecast:</h2>
+						<button id="weather-btn" class="btn btn-primary">Get random forecast</button>
+			</div>
+			<div class="col-md-6">
+				<h2>Enter city name:</h2>
+				<div class="input-group mb-3">
+					<input id="input-field" type="text" class="form-control" placeholder="City name">
+					<div class="input-group-append">
+						<button id="input-btn" class="btn btn-primary" type="button">Get forecast</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+			  <div class="col-lg-12 mx-auto">
+				<div id="forecast-container" class="col-lg-12"></div>
+				<table class="table table-bordered aggregated-table">
+				  <thead >
+					<tr>
+					  <th>Average Temperature (C)</th>
+					  <th>Maximum Temperature (C)</th>
+					  <th>Minimum Temperature (C)</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+					  <td id="average-temperature"></td>
+					  <td id="maximum-temperature"></td>
+					  <td id="minimum-temperature"></td>
+					</tr>
+				  </tbody>
+				</table>
+			  </div>
+			</div>
+		  </div>
+		  <div class="modal" id="error-modal">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">Error</h5>
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+				  <p id="error-message"></p>
+				</div>
+			  </div>
+			</div>
+		  </div>
+	<script>
+	$(document).ready(function(){
+		$('#weather-btn').click(function() {
+			$('#forecast-container').empty();
+			$(".aggregated-table").css("display", "none");
+			$.ajax({
+				url: "http://127.0.0.1:8000/api/weather/random",	
+				method: "GET",
+				success: function(response) {
+					if (response["errors"].length > 0) {
+						$('#error-message').text(response['errors']);
+						$('#error-modal').modal('show');
+					}
+					var data = response
+					// Display aggregated data
+					$('#average-temperature').text(data.aggregated["Average Temperature (C)"]);
+					$('#maximum-temperature').text(data.aggregated["Maximum Temperature (C)"]);
+					$('#minimum-temperature').text(data.aggregated["Minimum Temperature (C)"]);
+	
+					// Display forecast data
+					var forecastContainer = $('#forecast-container');
+					$.each(data.forecast, function(cityName, cityData) {
+					var card = $('<div class="card">');
+					const cityDate = new Date(cityData['Timestamp']*1000 - cityData['Timezone']* 1000);
+					const options = {
+					weekday: 'long', 
+					month: 'short', 
+					day: 'numeric', 
+					hour: 'numeric', 
+					minute: 'numeric'};
+					const formattedDate = cityDate.toLocaleString('en-US', options);
+	
+					var cardHeader = $('<div class="card-header">').text(formattedDate);
+					var cardBody = $('<div class="card-body">');
+					var cardText = $('<div class="card-text">');
+					var cityNameElem = $('<div class="city-name">').text(cityName);
+					var iconElem = $('<img class="icon">').attr('src', 'https://openweathermap.org/img/wn/' + cityData.Icon + '.png');
+					var temperatureElem = $('<span class="temperature">').text(cityData["Temperature (C)"]);
+					var unitElem = $('<span class="unit">&deg;C</span>');
+					var descriptionElem = $('<div class="description">').text(cityData.Description);
+					var humidityElem = $('<div class="humidity">').text('Humidity: ' + cityData["Humidity (%)"] + '%');
+	
+					// Append elements to card
+					cardText.append(iconElem);
+					cardText.append(temperatureElem);
+					cardText.append(unitElem);
+					cardText.append(descriptionElem);
+					cardText.append(humidityElem);
+					cardText.append(cityNameElem);
+					cardBody.append(cardText);
+					card.append(cardHeader);
+					card.append(cardBody);
+	
+				  // Append card to container
+				  forecastContainer.append(card);
+				  });
+				  $(".aggregated-table").css("display", "table");
+				},
+				error: function(xhr, status, error) {
+					$('#error-message').text(status + ': ' + error);
+					$('#error-modal').modal('show');
+				  }
+			});
+		});
+	
+		$('#input-btn').click(function() {
+			var value = $('#input-field').val();
+			$.ajax({
+				url: "http://127.0.0.1:8000/api/weather/" + value,
+				method: "GET",
+				success: function(response) {
+					console.log(response["errors"])
+					if (response["errors"].length > 0) {
+						$('#error-message').text(response['errors']);
+						$('#error-modal').modal('show');
+					}
+	
+					var weather = response['forecast']['Description'][value];
+					var temperature = response['forecast']['Temperature (C)'][value];
+					var humidity = response['forecast']['Humidity (%)'][value];
+					var country = response['forecast']['Country Code'][value];
+	
+					var table = $('<table>').addClass('table');
+					$('#forecast-container').html(table);
+	
+					var tbody = $('<tbody>');
+					tbody.append($('<tr>').append($('<td>').text('City:')).append($('<td>').text(value)));
+					tbody.append($('<tr>').append($('<td>').text('Country:')).append($('<td>').text(country)));
+					tbody.append($('<tr>').append($('<td>').text('Description:')).append($('<td>').text(weather)));
+					tbody.append($('<tr>').append($('<td>').text('Temperature:')).append($('<td>').text(temperature + 'C')));
+					tbody.append($('<tr>').append($('<td>').text('Humidity:')).append($('<td>').text(humidity + '%')));
+					table.append(tbody);
+	
+					$(".aggregated-table").css("display", "none");
+				},
+				error: function(xhr, status, error) {
+				  }
+			});
+		});
+	});
+	</script>
+</body>
+</html>
