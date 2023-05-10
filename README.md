@@ -33,6 +33,8 @@ Example usage:
 4. Run program with command: `python -m task2`
 
 Example usage:
+    
+![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/9b8e2a70-f389-459e-a9e9-275de13f347c)
 
 
 ### Task 3
