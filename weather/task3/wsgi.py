@@ -34,7 +34,41 @@ except Exception as exc:
 
 
 @app.route("/api/weather/<city>", methods=['GET'])
-def forecast(city):
+def forecast(city: str):
+    """
+    Get forecast for given city from OpenWeatherApi.
+
+    Arguments:
+        city: query param.
+
+    Returns: Response if 200
+        {
+            "errors": [],
+            "forecast": {
+                "Country Code": {
+                "Sofia": "BG"
+                },
+                "Description": {
+                "Sofia": "broken clouds"
+                },
+                "Humidity (%)": {
+                "Sofia": 72
+                },
+                "Icon": {
+                "Sofia": "04d"
+                },
+                "Temperature (C)": {
+                "Sofia": 14
+                },
+                "Timestamp": {
+                "Sofia": 1683629188
+                },
+                "Timezone": {
+                "Sofia": 10800
+                }
+            }
+        }
+    """
     if not weather_service.validate_city(city):
         return jsonify({'errors': ['Not valid city']})
     forecast, errors = weather_service.get_forecast([city])
@@ -44,6 +78,31 @@ def forecast(city):
 
 @app.route("/api/weather/random", methods=['GET'])
 def random_forecast():
+    """
+    Get forecast for 5 random city from OpenWeatherApi.
+
+    Returns: Response if 200
+    {
+    "aggregated": {
+        "Average Temperature (C)": 16.4,
+        "Maximum Temperature (C)": 20,
+        "Minimum Temperature (C)": 12
+    },
+    "errors": [],
+    "forecast": {
+        "Cupar": {
+        "Country Code": "GB",
+        "Description": "few clouds",
+        "Humidity (%)": 66,
+        "Icon": "02d",
+        "Temperature (C)": 17,
+        "Timestamp": 1683629459,
+        "Timezone": 3600
+        },
+        .... and 5 same ....
+    }
+    }
+    """
     cities = weather_service.get_random_cities(5)
     forecast, errors = weather_service.get_forecast(cities)
 
@@ -54,6 +113,7 @@ def random_forecast():
 
 @app.route("/api/healthcheck", methods=['GET'])
 def healthcheck():
+    """ healthcheck """
     return {"status": "healthy"}
 
 if __name__ == '__main__':

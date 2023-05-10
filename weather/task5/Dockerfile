@@ -2,8 +2,8 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY . .
+COPY ./app .
 
 RUN pip install -r requirements.txt
 
-CMD gunicorn --bind 0.0.0.0:5000 wsgi:app --access-logfile '-'
+CMD gunicorn --bind 0.0.0.0:5000 main:app --access-logfile '-'

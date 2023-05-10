@@ -175,7 +175,7 @@
 			$('#forecast-container').empty();
 			$(".aggregated-table").css("display", "none");
 			$.ajax({
-				url: "http://127.0.0.1:8000/api/weather/random",	
+				url: "http://127.0.0.1:80/api/weather/random",	
 				method: "GET",
 				success: function(response) {
 					if (response["errors"].length > 0) {
@@ -237,7 +237,7 @@
 		$('#input-btn').click(function() {
 			var value = $('#input-field').val();
 			$.ajax({
-				url: "http://127.0.0.1:8000/api/weather/" + value,
+				url: "http://127.0.0.1:80/api/weather/" + value,
 				method: "GET",
 				success: function(response) {
 					console.log(response["errors"])
