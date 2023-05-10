@@ -21,6 +21,7 @@ Next you have different options to choose:
 - `python -m task1 -h` will display help.
 
 Example usage:
+    
     ![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/fd03b95f-c434-4937-8435-f4d597f47f77)
 
 ### Task 2
