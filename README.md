@@ -22,7 +22,7 @@ Next you have different options to choose:
 
 Example usage:
     
-![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/fd03b95f-c434-4937-8435-f4d597f47f77)
+![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/e69c69fd-a167-4d7e-8458-509e89f436ea)
 
 ### Task 2
 
