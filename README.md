@@ -50,6 +50,11 @@ Example usage:
 3. Open [localhost:80](http://localhost:80).
 
 Example usage for task 3,4,5:
+                                                                 
+ ![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/793c29e4-4892-46ae-924f-a68569b62ea8)
+
+ ![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/d18e5976-1516-4cf2-af2e-53d138477fd7)
+
 
 ### Task4
 0. **CD** inside `task4/weather_project` folder.
