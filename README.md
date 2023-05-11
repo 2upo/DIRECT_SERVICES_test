@@ -49,7 +49,7 @@ Example usage:
 2. Run `docker-compose up --build`.
 3. Open [localhost:80](http://localhost:80).
 
-Example usage for task 3,4,5:
+Example usage for task 3,4:
                                                                  
  ![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/793c29e4-4892-46ae-924f-a68569b62ea8)
 
@@ -69,4 +69,21 @@ Example usage for task 3,4,5:
 3. Open [localhost:80](http://localhost:80).
 
 ### Task5
+0. **CD** inside `task3/` folder.
 
+1. Create file `.env`: 
+    ```
+       API_KEY = 75a4824b5333b04{{{{{{{{{{75151a799dbafebd0 # <- Remove {{{{{{{{ here
+       URL="https://api.openweathermap.org/data/2.5/weather"
+    ```
+    (**Important: REMOVE {{{{{{{{{{{ from API KEY BEFORE PASTING**)
+2. `docker-compose run -w "/usr/src/app" app flask db upgrade`
+3. `docker-compose up --build`      
+4. Open [localhost:80](http://localhost:80).
+
+Example usage:
+
+![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/53000178-75d4-4fe3-bd87-f6014b2010d7)
+
+![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/05efa4f9-6b02-48e5-840f-6d9ca285c4d0)
+                                                                 
