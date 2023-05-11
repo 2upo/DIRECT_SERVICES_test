@@ -1,3 +1,4 @@
+$.ti_pidor = "aboba"
 $(document).ready(function(){
     $('#weather-btn').click(function() {
         $('#forecast-container').empty();

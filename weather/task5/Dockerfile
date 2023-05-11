@@ -1,10 +1,13 @@
 FROM python:3.9-slim
 
-WORKDIR /app
+WORKDIR /usr/src
 
-COPY ./app .
+COPY ./app /usr/src/app
 
-RUN pip install -r requirements.txt
-RUN flask db upgrade
+RUN apt-get update && apt-get install -y netcat
 
-CMD gunicorn --bind 0.0.0.0:5000 app:app --access-logfile '-'
+RUN chmod u+x ./app/entrypoint.sh
+
+RUN pip install -r ./app/requirements.txt
+
+ENTRYPOINT [ "/usr/src/app/entrypoint.sh" ]

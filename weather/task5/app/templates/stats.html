@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>City Data</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
+</head>
+<body>
+    <a href="index.html" id="weather-btn" class="btn btn-primary col-lg-12" style="margin:10px;">Back</a>
+    <table id="city-data" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.getJSON("http://127.0.0.1:80/api/database/get", function(data) {
+                $('#city-data').DataTable({
+                    data: data.cities,
+                    columns: [
+                        { data: 'id' },
+                        { data: 'name' },
+                        { data: 'temperature' },
+                        { data: 'humidity' }
+                    ]
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

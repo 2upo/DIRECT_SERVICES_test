@@ -12,7 +12,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@db:6500/weather'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:password123@db:5432/weather'
 db = SQLAlchemy(app)
 
 CORS(app)
@@ -57,17 +57,6 @@ except Exception as exc:
     )
     sys.exit(1)
 
-@app.route('/login', methods = ['POST', 'GET'])
-def login():
-    if request.method == 'GET':
-        return "Login via the login Form"
-     
-    if request.method == 'POST':
-        name = request.form['name']
-        age = request.form['age']
-
-        return f"Done!!"
-
 @app.route("/api/weather/<city>", methods=['GET'])
 def forecast(city):
     if not _weather_service.validate_city(city):
@@ -75,20 +64,32 @@ def forecast(city):
     forecast, errors = _weather_service.get_forecast([city])
     for error in errors:
         logging.info(error)
-    new_city = CityWeather(name=city, temperature=forecast["forecast"])
-    db.session.add(new_user)
+
+    city_weather = CityWeather(city, forecast['Temperature (C)'][city], forecast['Humidity (%)'][city])
+    db.session.add(city_weather)
     db.session.commit()
+
     return jsonify({'forecast': forecast.to_dict(), 'errors': errors})
 
 @app.route("/api/weather/random", methods=['GET'])
 def random_forecast():
     cities = _weather_service.get_random_cities(5)
     forecast, errors = _weather_service.get_forecast(cities)
-
+    for city in cities:
+        city_weather = CityWeather(city, forecast['Temperature (C)'][city], forecast['Humidity (%)'][city],)
+        db.session.add(city_weather)
+        db.session.commit()
     agg_field = "Temperature (C)"
     aggregated = _weather_service.calculate_stats(forecast, agg_field)
 
     return jsonify({'forecast': forecast.T.to_dict(),'aggregated': aggregated, 'errors': errors})
+
+
+@app.route("/api/database/get")
+def get_cities():
+    cities = db.session.query(CityWeather).order_by(CityWeather.id.desc()).limit(100).all()
+    return {"cities": [{"id": city.id, "name": city.name, "temperature": city.temperature, "humidity": city.humidity} for city in cities]}
+
 
 @app.route("/api/healthcheck", methods=['GET'])
 def healthcheck():
