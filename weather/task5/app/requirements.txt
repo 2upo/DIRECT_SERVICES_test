@@ -6,3 +6,6 @@ flask_cors
 requests==2.29.0
 tenacity==8.2.2
 python-dotenv==1.0.0
+Flask-SQLAlchemy
+Flask-Migrate
+psycopg2-binary

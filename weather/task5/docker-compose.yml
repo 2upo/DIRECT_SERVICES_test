@@ -12,8 +12,8 @@ services:
       - db
   db:
     image: postgres:latest
-    ports:
-      - '6500:5432'
+    expose:
+      - '6500'
     env_file:
       - ./.env
     volumes:

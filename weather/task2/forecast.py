@@ -167,7 +167,7 @@ class WeatherService:
             return {
                 f"Minimum {field}": df[field].min(),
                 f"Maximum {field}": df[field].max(),
-                f"Average {field}": df[field].mean(),
+                f"Average {field}": round(df[field].mean(), 2),
             }
         except Exception:
             raise ValueError("Given DataFrame shape is invalid.")
