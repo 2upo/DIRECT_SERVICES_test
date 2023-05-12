@@ -87,3 +87,14 @@ Example usage:
 
 ![image](https://github.com/2upo/DIRECT_SERVICES_test/assets/66561266/05efa4f9-6b02-48e5-840f-6d9ca285c4d0)
                                                                  
+
+#  Junior SysAdmin Task
+                                                                 
+1. `netstat -tna | grep ':80.*ESTABLISHED' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr`
+2. `for ip in $(netstat -tna | grep ':80.*ESTABLISHED' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | head -n 5 | awk '{print $2}'); do iptables -A INPUT -s $ip -j DROP; done` 
+3. `grep "12/May/2023" /var/log/apache2/access.log | awk '{print $1}' | sort | uniq -c | sort -nr`
+4. `hdparm -i /dev/sda | grep Model | awk '{print $3" "$4" "$5" "$6" "$7" "$8}'; hdparm -i /dev`
+5. `mysqldump -u <username> -p<password> <database_name> > dump.sql`
+6.  `mysql -u <username> -p<password> -h <host> <database_name> < dump.sql`
+7. `find . -maxdepth 3 -name "*.tar.gz" -type f -delete`
+8. За да спрете mysqld, може да използвате команда kill -9 <pid> където <pid> е идентификаторът на процеса на mysqld. Тази команда е крайно средство и ще прекъсне процеса незабавно без да предостави възможност за запис на диска на отворените данни. В случай че имате информация, която трябва да бъде записана на диска, е по-добре да използвате командата /etc/init.d/mysqld stop, която ще спре процеса, като позволи на MySQL да записва данните на диска преди да го спре. Ако нито една от тези команди не работи, може да използвате командата killall mysqld, която ще прекрати всички процеси на mysqld.
